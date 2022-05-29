@@ -14,7 +14,7 @@ class EventController extends Controller
     {
         $calendarEvents = Event::get();
         $calendarEventsIds = $calendarEvents->pluck('googleEvent.id');
-        $chatListings = ChatListing::whereIn('google_calendar_event_id', $calendarEventsIds)->get();
+        $chatListings = ChatListing::whereIn('google_calendar_event_id', $calendarEventsIds)->with('user', 'accepted_by_user')->get();
 
         $events = $calendarEvents->map(function($event) use ($chatListings) {
             return $this->mapEventData($event, $chatListings);
@@ -34,17 +34,11 @@ class EventController extends Controller
             return $event['listing'] !== null && $event['listing']['accepted_by'] === null;
         });
 
-        $myListingsCount = $chatListings->where('user_id', auth()->user()->id)->count();
+        $myListingsCount = $chatListings->where('user_id', auth()->user()->id)->whereNotNull('accepted_at')->count();
         $myAcceptedCount = $chatListings->where('accepted_by', auth()->user()->id)->count();
         $chatCoins = $myAcceptedCount - $myListingsCount;
 
         return Inertia::render('Calendar', ['yourEvents' => $yourEvents, 'listings' => $listings, 'chatCoins' => $chatCoins]);
-
-        dd(auth()->user()->toArray());
-        // get all future events on a calendar
-        $events = Event::get();
-        dd($events);
-
 
     }
     /**
@@ -63,7 +57,7 @@ class EventController extends Controller
             'start' => $time,
             'canBePublished' => $listing === null,
             'listing' => $listing,
-            'friendlyTime' => $time->isoFormat('D \d\e MMMM'),
+            'friendlyTime' => $time->isoFormat('D \d\e MMMM hh:mm'),
             'dayOfWeek' => $time->isoFormat('dddd'),
             'timezone' => $event->googleEvent->start->timeZone,
             'attendees' => collect($event->googleEvent->attendees)->map(function ($attendee) {

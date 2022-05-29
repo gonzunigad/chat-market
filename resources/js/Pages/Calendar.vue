@@ -2,20 +2,28 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import {Inertia} from "@inertiajs/inertia";
 
-const publish = async (event) => {
+const publish = async (ev) => {
     let response = await Inertia.post(route('list-chat'), {
-        event_id: event.id
+        event_id: ev.id
     });
 
     console.log(await response.json());
 }
 
-const take = async (event) => {
+const take = async (ev) => {
     let response = await Inertia.post(route('take-chat'), {
-        listing_id: event.listing.id
+        listing_id: ev.listing.id
     });
 
     console.log(await response.json());
+}
+const deleteListing = async (ev) => {
+    let response = await Inertia.delete(route('delete-listing'), {
+        data: {listing_id: ev.listing.id}
+    });
+
+    console.log(await response.json());
+
 }
 
 </script>
@@ -25,7 +33,7 @@ const take = async (event) => {
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 ¡Hola {{ $page.props.user.name }}! Tienes <strong class="font-bold text-2xl" :class="{'text-red-600': $page.props.chatCoins < 0}">
-                {{ $page.props.chatCoins }}</strong> ChatCoins™
+                {{ $page.props.chatCoins }}</strong> puntos de Karma
                 <span class="text-2xl" v-if="$page.props.chatCoins < 0">😢</span>
             </h2>
         </template>
@@ -45,6 +53,14 @@ const take = async (event) => {
                                 Publicar turno
                             </a>
                         </div>
+                        <div v-if="event.listing && event.listing.accepted_by === null"
+                             class="text-lg  font-bold text-right">
+                            Publicado
+                        </div>
+                        <div v-if="event.listing && event.listing.accepted_by !== null"
+                            class="text-lg text-green-600 font-bold text-right">
+                            Aceptado por {{ event.listing.accepted_by_user.name }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -57,8 +73,10 @@ const take = async (event) => {
                          v-for="event in $page.props.listings">
                         <strong>{{ event.dayOfWeek }}</strong> <br>
                         {{ event.friendlyTime }} <br>
+                        Publicado por {{ event.listing.user.name }} <br>
+                        <span class="text-sm"> ({{ event.listing.user.email }})</span>
 
-                        <a href="" v-if="$page.props.user.id == event.listing.user_id"
+                        <a @click.prevent="deleteListing(event)" href="" v-if="$page.props.user.id == event.listing.user_id"
                            class="p-2 bg-red-500 hover:bg-red-800 rounded text-white text-center mt-2 block">
                             Eliminar
                         </a>

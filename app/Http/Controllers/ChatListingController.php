@@ -41,4 +41,16 @@ class ChatListingController extends Controller
 
         return Inertia::location(route('calendar'));
     }
+
+    public function destroy(Request $request)
+    {
+        $chatListing = ChatListing::findOrFail($request->get('listing_id'));
+        if ($chatListing->user->id !== auth()->user()->id) {
+            abort(401, 'You can not delete others people listings');
+        }
+
+        $chatListing->delete();
+
+        return Inertia::location(route('calendar'));
+    }
 }

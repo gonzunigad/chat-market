@@ -14,7 +14,7 @@ class ChatListing extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function aceppted_by()
+    public function accepted_by_user()
     {
         return $this->belongsTo(User::class, 'accepted_by');
     }

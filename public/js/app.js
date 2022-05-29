@@ -23546,7 +23546,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     expose();
 
     var publish = /*#__PURE__*/function () {
-      var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(event) {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(ev) {
         var response;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) {
@@ -23554,7 +23554,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context.next = 2;
                 return _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_1__.Inertia.post(route('list-chat'), {
-                  event_id: event.id
+                  event_id: ev.id
                 });
 
               case 2:
@@ -23582,7 +23582,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }();
 
     var take = /*#__PURE__*/function () {
-      var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(event) {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(ev) {
         var response;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) {
@@ -23590,7 +23590,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context2.next = 2;
                 return _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_1__.Inertia.post(route('take-chat'), {
-                  listing_id: event.listing.id
+                  listing_id: ev.listing.id
                 });
 
               case 2:
@@ -23617,9 +23617,48 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       };
     }();
 
+    var deleteListing = /*#__PURE__*/function () {
+      var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(ev) {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_1__.Inertia["delete"](route('delete-listing'), {
+                  data: {
+                    listing_id: ev.listing.id
+                  }
+                });
+
+              case 2:
+                response = _context3.sent;
+                _context3.t0 = console;
+                _context3.next = 6;
+                return response.json();
+
+              case 6:
+                _context3.t1 = _context3.sent;
+
+                _context3.t0.log.call(_context3.t0, _context3.t1);
+
+              case 8:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      return function deleteListing(_x3) {
+        return _ref4.apply(this, arguments);
+      };
+    }();
+
     var __returned__ = {
       publish: publish,
       take: take,
+      deleteListing: deleteListing,
       AppLayout: _Layouts_AppLayout_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
       Inertia: _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_1__.Inertia
     };
@@ -26359,7 +26398,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 8
   /* PROPS */
   , ["title"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetBanner"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("nav", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Primary Navigation Menu "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Logo "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Link"], {
-    href: _ctx.route('dashboard')
+    href: _ctx.route('calendar')
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetApplicationMark"], {
@@ -26372,8 +26411,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, 8
   /* PROPS */
   , ["href"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Navigation Links "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetNavLink"], {
-    href: _ctx.route('dashboard'),
-    active: _ctx.route().current('dashboard')
+    href: _ctx.route('calendar'),
+    active: _ctx.route().current('calendar')
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_8];
@@ -26540,7 +26579,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       'hidden': !$setup.showingNavigationDropdown
     }, "sm:hidden"])
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetResponsiveNavLink"], {
-    href: _ctx.route('dashboard'),
+    href: _ctx.route('calendar'),
     active: _ctx.route().current('dashboard')
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -27933,7 +27972,7 @@ var _hoisted_1 = {
   "class": "font-semibold text-xl text-gray-800 leading-tight"
 };
 
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" ChatCoins™ ");
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" puntos de Karma ");
 
 var _hoisted_3 = {
   key: 0,
@@ -27971,39 +28010,50 @@ var _hoisted_12 = {
 };
 var _hoisted_13 = ["onClick"];
 var _hoisted_14 = {
+  key: 1,
+  "class": "text-lg font-bold text-right"
+};
+var _hoisted_15 = {
+  key: 2,
+  "class": "text-lg text-green-600 font-bold text-right"
+};
+var _hoisted_16 = {
   "class": "col-span-2"
 };
 
-var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
   "class": "text-lg font-bold pt-6 pb-6"
 }, "Chats disponibles para cubrir", -1
 /* HOISTED */
 );
 
-var _hoisted_16 = {
+var _hoisted_18 = {
   "class": "grid grid-cols-3 gap-4"
 };
-var _hoisted_17 = {
+var _hoisted_19 = {
   "class": "bg-white overflow-hidden shadow-xl sm:rounded-lg p-4"
 };
 
-var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)();
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)();
 
-var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1
+var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1
 /* HOISTED */
 );
 
-var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1
 /* HOISTED */
 );
 
-var _hoisted_21 = {
-  key: 0,
-  href: "",
-  "class": "p-2 bg-red-500 hover:bg-red-800 rounded text-white text-center mt-2 block"
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1
+/* HOISTED */
+);
+
+var _hoisted_24 = {
+  "class": "text-sm"
 };
-var _hoisted_22 = ["onClick"];
-var _hoisted_23 = {
+var _hoisted_25 = ["onClick"];
+var _hoisted_26 = ["onClick"];
+var _hoisted_27 = {
   key: 0
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -28035,15 +28085,30 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "class": "p-2 bg-blue-500 hover:bg-blue-800 rounded text-white text-center mt-2 block"
         }, " Publicar turno ", 8
         /* PROPS */
-        , _hoisted_13)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+        , _hoisted_13)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), event.listing && event.listing.accepted_by === null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_14, " Publicado ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), event.listing && event.listing.accepted_by !== null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_15, " Aceptado por " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(event.listing.accepted_by_user.name), 1
+        /* TEXT */
+        )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
       }), 256
       /* UNKEYED_FRAGMENT */
-      ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.$page.props.listings, function (event) {
-        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(event.dayOfWeek), 1
+      ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.$page.props.listings, function (event) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(event.dayOfWeek), 1
         /* TEXT */
-        ), _hoisted_18, _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(event.friendlyTime) + " ", 1
+        ), _hoisted_20, _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(event.friendlyTime) + " ", 1
         /* TEXT */
-        ), _hoisted_20, _ctx.$page.props.user.id == event.listing.user_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", _hoisted_21, " Eliminar ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.$page.props.user.id != event.listing.user_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
+        ), _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Publicado por " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(event.listing.user.name) + " ", 1
+        /* TEXT */
+        ), _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_24, " (" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(event.listing.user.email) + ")", 1
+        /* TEXT */
+        ), _ctx.$page.props.user.id == event.listing.user_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
+          key: 0,
+          onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+            return $setup.deleteListing(event);
+          }, ["prevent"]),
+          href: "",
+          "class": "p-2 bg-red-500 hover:bg-red-800 rounded text-white text-center mt-2 block"
+        }, " Eliminar ", 8
+        /* PROPS */
+        , _hoisted_25)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.$page.props.user.id != event.listing.user_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
           key: 1,
           onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
             return $setup.take(event);
@@ -28051,10 +28116,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "class": "p-2 bg-blue-500 hover:bg-blue-800 rounded text-white text-center mt-2 block"
         }, " Tomar ", 8
         /* PROPS */
-        , _hoisted_22)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("    <ul>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        <li v-for=\"attendee in event.attendees\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            {{ attendee.username }}"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        </li>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("    </ul>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("</div>")]);
+        , _hoisted_26)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("    <ul>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        <li v-for=\"attendee in event.attendees\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            {{ attendee.username }}"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        </li>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("    </ul>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("</div>")]);
       }), 256
       /* UNKEYED_FRAGMENT */
-      )), _ctx.$page.props.listings.length <= 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_23, " Aún no hay publicaciones :( ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+      )), _ctx.$page.props.listings.length <= 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_27, " Aún no hay publicaciones :( ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
     }),
     _: 1
     /* STABLE */
@@ -30351,7 +30416,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     title: "Welcome"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [$props.canLogin ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_2, [_ctx.$page.props.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["Link"], {
     key: 0,
-    href: _ctx.route('dashboard'),
+    href: _ctx.route('calendar'),
     "class": "text-sm text-gray-700 underline"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
