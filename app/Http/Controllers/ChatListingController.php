@@ -6,6 +6,7 @@ use App\Models\ChatListing;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Spatie\GoogleCalendar\Event;
 
 class ChatListingController extends Controller
 {
@@ -38,6 +39,21 @@ class ChatListingController extends Controller
         $chatListing->accepted_at = Carbon::now();
         $chatListing->accepted_by = auth()->user()->id;
         $chatListing->save();
+
+        $googleCalendarEvent = Event::find($chatListing->google_calendar_event_id);
+        $myUsername = strstr( auth()->user()->email, '@', true);
+        $listingOwnerUsername = strstr($chatListing->user->email, '@', true);
+
+        $eventName = $googleCalendarEvent->googleEvent->getSummary();
+        $eventName = str_replace($listingOwnerUsername, $myUsername . ' (reemplaza a ' . $listingOwnerUsername .')', $eventName);
+
+        // $googleCalendarEvent->addAttendee([
+        //     'displayName' => auth()->user()->name,
+        //     'comment' => '',
+        //     'email' => auth()->user()->email
+        // ]);
+        $googleCalendarEvent->googleEvent->summary = $eventName;
+        $googleCalendarEvent->save();
 
         return Inertia::location(route('calendar'));
     }
