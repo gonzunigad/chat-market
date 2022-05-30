@@ -22,6 +22,8 @@ class ChatListingController extends Controller
         $chatListing->offered_coins = $request->get('offered_coins', 1);
         $chatListing->save();
 
+        session()->flash('message', ['type' => 'success', 'message' => 'Publicación creada correctamente']);
+
         return Inertia::location(route('calendar'));
     }
 
@@ -55,6 +57,8 @@ class ChatListingController extends Controller
         $googleCalendarEvent->googleEvent->summary = $eventName;
         $googleCalendarEvent->save();
 
+        session()->flash('message', ['type' => 'success', 'message' => 'Turno tomado correctamente']);
+
         return Inertia::location(route('calendar'));
     }
 
@@ -66,6 +70,23 @@ class ChatListingController extends Controller
         }
 
         $chatListing->delete();
+
+        session()->flash('message', ['type' => 'success', 'message' => 'Publicación eliminada correctamente']);
+
+        return Inertia::location(route('calendar'));
+    }
+
+    public function upgrade(Request $request)
+    {
+        $chatListing = ChatListing::findOrFail($request->get('listing_id'));
+        if ($chatListing->user->id !== auth()->user()->id) {
+            abort(401, 'You can not upgrade others people listings');
+        }
+
+        $chatListing->offered_coins = 2;
+        $chatListing->save();
+
+        session()->flash('message', ['type' => 'success', 'message' => 'Publicación actualizada correctamente']);
 
         return Inertia::location(route('calendar'));
     }

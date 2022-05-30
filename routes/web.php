@@ -33,6 +33,7 @@ Route::middleware([
     Route::get('calendar', [\App\Http\Controllers\EventController::class, 'index'])->name('calendar');
     Route::post('chat-listings', [\App\Http\Controllers\ChatListingController::class, 'store'])->name('list-chat');
     Route::delete('delete-listing', [\App\Http\Controllers\ChatListingController::class, 'destroy'])->name('delete-listing');
+    Route::delete('upgrade-listing', [\App\Http\Controllers\ChatListingController::class, 'upgrade'])->name('upgrade-listing');
     Route::post('take-chat', [\App\Http\Controllers\ChatListingController::class, 'take'])->name('take-chat');
 
     Route::get('/dashboard', function () {
