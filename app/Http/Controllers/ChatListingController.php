@@ -10,6 +10,8 @@ use Spatie\GoogleCalendar\Event;
 
 class ChatListingController extends Controller
 {
+    const DOUBLE_KARMA_OFFERED_COINS = 2;
+
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -83,10 +85,10 @@ class ChatListingController extends Controller
             abort(401, 'You can not upgrade others people listings');
         }
 
-        $chatListing->offered_coins = 2;
+        $chatListing->offered_coins = static::DOUBLE_KARMA_OFFERED_COINS;
         $chatListing->save();
 
-        session()->flash('message', ['type' => 'success', 'message' => 'Publicación actualizada correctamente']);
+        session()->flash('message', ['type' => 'success', 'message' => 'Ahora tu publicación está destacada. Si alguien la acepta deberás pagar dos turnos.']);
 
         return Inertia::location(route('calendar'));
     }

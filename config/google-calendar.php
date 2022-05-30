@@ -23,12 +23,12 @@ return [
             /*
              * Path to the json file containing the oauth2 credentials.
              */
-            'credentials_json' => storage_path('app/google-calendar/oauth-credentials.json'),
+            'credentials_json' => storage_path('app/oauth-credentials.json'),
 
             /*
              * Path to the json file containing the oauth2 token.
              */
-            'token_json' => storage_path('app/google-calendar/oauth-token.json'),
+            'token_json' => storage_path('app/oauth-token.json'),
         ],
     ],
 

@@ -47,7 +47,7 @@ const upgrade = async (ev) => {
             </h2>
         </template>
 
-        <div v-if="$page.props.flash.message" class="bg-green-300 my-10 p-2 rounded shadow max-w-6xl mx-auto ">
+        <div v-if="$page.props.flash.message" class="bg-green-600 text-white my-10 p-2 px-6 rounded shadow max-w-6xl mx-auto ">
             {{ $page.props.flash.message.message }}
         </div>
 
