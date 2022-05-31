@@ -1068,6 +1068,9 @@ select {
 .ml-auto {
   margin-left: auto;
 }
+.mt-auto {
+  margin-top: auto;
+}
 .block {
   display: block;
 }

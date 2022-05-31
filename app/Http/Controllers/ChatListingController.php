@@ -90,6 +90,7 @@ class ChatListingController extends Controller
 
         return Inertia::location(route('calendar'));
     }
+
     /**
      * @param \Spatie\GoogleCalendar\Event $googleCalendarEvent
      * @param $listingOwnerEmail

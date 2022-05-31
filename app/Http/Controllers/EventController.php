@@ -74,7 +74,7 @@ class EventController extends Controller
         $myId = auth()->user()->id;
 
         return $events->filter(function ($event) use ($myEmail, $myId) {
-            if ($event['listing']['accepted_by_user']['id'] ?? null === $myId) {
+            if (($event['listing']['accepted_by_user']['id'] ?? null) === $myId) {
                 return true;
             }
 
