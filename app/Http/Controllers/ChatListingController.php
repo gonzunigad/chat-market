@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\ChatListing;
+use App\Services\GoogleCalendar\Event;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Spatie\GoogleCalendar\Event;
 
 class ChatListingController extends Controller
 {
@@ -44,18 +44,16 @@ class ChatListingController extends Controller
         $chatListing->accepted_by = auth()->user()->id;
         $chatListing->save();
 
+        Event::$oauthToken = auth()->user()->google_token;
         $googleCalendarEvent = Event::find($chatListing->google_calendar_event_id);
         $myUsername = strstr( auth()->user()->email, '@', true);
         $listingOwnerUsername = strstr($chatListing->user->email, '@', true);
+        $listingOwnerEmail = $chatListing->user->email;
 
         $eventName = $googleCalendarEvent->googleEvent->getSummary();
         $eventName = str_replace($listingOwnerUsername, $myUsername . ' (reemplaza a ' . $listingOwnerUsername .')', $eventName);
 
-        // $googleCalendarEvent->addAttendee([
-        //     'displayName' => auth()->user()->name,
-        //     'comment' => '',
-        //     'email' => auth()->user()->email
-        // ]);
+        $this->setEventAttendees($googleCalendarEvent, $listingOwnerEmail);
         $googleCalendarEvent->googleEvent->summary = $eventName;
         $googleCalendarEvent->save();
 
@@ -91,5 +89,29 @@ class ChatListingController extends Controller
         session()->flash('message', ['type' => 'success', 'message' => 'Ahora tu publicación está destacada. Si alguien la acepta deberás pagar dos turnos.']);
 
         return Inertia::location(route('calendar'));
+    }
+    /**
+     * @param \Spatie\GoogleCalendar\Event $googleCalendarEvent
+     * @param $listingOwnerEmail
+     * @return void
+     */
+    public function setEventAttendees(\Spatie\GoogleCalendar\Event $googleCalendarEvent, $listingOwnerEmail): void
+    {
+        collect($googleCalendarEvent->googleEvent->getAttendees())->filter(function ($attendee) use ($listingOwnerEmail
+            ) {
+                return $attendee['email'] !== $listingOwnerEmail;
+            })->each(function ($attendee) use ($googleCalendarEvent) {
+                $googleCalendarEvent->addAttendee([
+                    'displayName' => $attendee['displayName'],
+                    'comment' => $attendee['comment'],
+                    'email' => $attendee['email']
+                ]);
+            });
+
+        $googleCalendarEvent->addAttendee([
+            'displayName' => auth()->user()->name,
+            'comment' => '',
+            'email' => auth()->user()->email
+        ]);
     }
 }

@@ -3,18 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\ChatListing;
+use App\Services\GoogleCalendar\Event;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Spatie\GoogleCalendar\Event;
 
 class EventController extends Controller
 {
     public function index()
     {
-        $cacheExpirationTimeInSeconds = 60*60*24*31;
+        Event::$oauthToken = auth()->user()->google_token;
+        $cacheExpirationTimeInSeconds = config('services.google.calendar.cache_events_seconds', 60*60*24*31);
         $calendarEvents = cache()->remember('events', $cacheExpirationTimeInSeconds , function() {
-          return Event::get();
+            return Event::get();
         });
 
         $calendarEventIds = $calendarEvents->pluck('googleEvent.id');

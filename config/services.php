@@ -35,6 +35,9 @@ return [
         'client_id' => env('GOOGLE_OAUTH_CLIENT_ID'),
         'client_secret' => env('GOOGLE_OAUTH_CLIENT_SECRET'),
         'redirect' => env('GOOGLE_OAUTH_REDIRECT_URL'),
+        'calendar' => [
+            'cache_events_seconds' => ENV('GOOGLE_CALENDAR_CACHE_IN_SECONDS', 60*60*24*31)
+        ]
     ]
 
 ];
